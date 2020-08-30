@@ -5,9 +5,7 @@
 4. Also you can find API Documentation using Swagger UI from below provided path
     Swagger Url - http://localhost:8080/swagger-ui.html
 
-##############################################################
-                    API - CUSTOMER 
-##############################################################
+########################  API - CUSTOMER  ######################################
 1. Service to get all Customers - 
   GET - http://localhost:8080/getAllCustomers
 
@@ -29,9 +27,7 @@
         "bonus_points": 5000
     }
 
-##############################################################
-                   API - HOTEL ROOM BOOKING 
-##############################################################
+########################  API - HOTEL ROOM BOOKING ############################
 
 1. Booking hotel please provide below provided JSON to service
   POST - http://localhost:8080/book
