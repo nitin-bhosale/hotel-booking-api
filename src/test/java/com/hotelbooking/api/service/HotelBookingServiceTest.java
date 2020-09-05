@@ -14,7 +14,12 @@ import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.hotelbooking.api.exception.BookingFailureException;
+import com.hotelbooking.api.exception.CustomerNotExistException;
+import com.hotelbooking.api.exception.InsufficientAccomodationDaysException;
+import com.hotelbooking.api.exception.InsufficientBonusPointsException;
+import com.hotelbooking.api.exception.NoPendingBookingFoundException;
 import com.hotelbooking.api.exception.RoomNotAvailableException;
+import com.hotelbooking.api.exception.RoomNotExistException;
 import com.hotelbooking.api.model.HotelBookingDetails;
 import com.hotelbooking.api.repository.HotelBookingRepository;
 
@@ -44,14 +49,18 @@ public class HotelBookingServiceTest {
 	}
 
 	@Test
-	public void hotelRoomBookingSuccess() throws BookingFailureException, RoomNotAvailableException {
+	public void hotelRoomBookingSuccess()
+			throws BookingFailureException, RoomNotAvailableException, RoomNotExistException, CustomerNotExistException,
+			InsufficientAccomodationDaysException, InsufficientBonusPointsException, NoPendingBookingFoundException {
 		when(this.hotelBookingRepository.save((HotelBookingDetails) any())).thenReturn(hotelBookingDetails);
 		HotelBookingDetails _bookingDetails = this.hotelBookingServiceImpl.bookHotel(hotelBookingDetails);
 		Assert.assertEquals(hotelBookingDetails, _bookingDetails);
 	}
 
 	@Test
-	public void hotelRoomBookingFailure() throws BookingFailureException, RoomNotAvailableException {
+	public void hotelRoomBookingFailure()
+			throws BookingFailureException, RoomNotAvailableException, RoomNotExistException, CustomerNotExistException,
+			InsufficientAccomodationDaysException, InsufficientBonusPointsException, NoPendingBookingFoundException {
 		when(this.hotelBookingRepository.save((HotelBookingDetails) any())).thenReturn(null);
 		HotelBookingDetails _bookingDetails = this.hotelBookingServiceImpl.bookHotel(hotelBookingDetails);
 		Assert.assertNotEquals(hotelBookingDetails, _bookingDetails);

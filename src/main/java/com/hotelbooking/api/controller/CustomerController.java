@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hotelbooking.api.exception.CustomerAlreadyExistException;
-import com.hotelbooking.api.exception.CustomerNotFoundException;
+import com.hotelbooking.api.exception.CustomerNotExistException;
 import com.hotelbooking.api.model.Customer;
 import com.hotelbooking.api.service.CustomerService;
 
@@ -25,17 +25,19 @@ public class CustomerController {
 	private CustomerService customerService;
 
 	@GetMapping(value = "/getCustomerById/{customer_id}", produces = { "application/json" })
-	public ResponseEntity<?> getCustomerById(@PathVariable("customer_id") Long customer_id)
-			throws CustomerNotFoundException {
+	public ResponseEntity<?> getCustomerById(@PathVariable("customer_id") Long customer_id) {
 		Customer _customer = null;
+
 		try {
 			_customer = this.customerService.getCustomerByCustomerId(customer_id);
-			return new ResponseEntity<Customer>(_customer, HttpStatus.OK);
-
-		} catch (CustomerNotFoundException e) {
+			if (_customer != null) {
+				return new ResponseEntity<Customer>(_customer, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<String>("Customer not found exception", HttpStatus.NOT_FOUND);
+			}
+		} catch (CustomerNotExistException e) {
 			return new ResponseEntity<String>("Customer not found exception", HttpStatus.NOT_FOUND);
 		}
-
 	}
 
 	@GetMapping(value = "/getAllCustomers", produces = { "application/json" })
@@ -50,7 +52,7 @@ public class CustomerController {
 				return new ResponseEntity<String>("Record Not Found, Customer list is empty", HttpStatus.NOT_FOUND);
 			}
 
-		} catch (CustomerNotFoundException e) {
+		} catch (CustomerNotExistException e) {
 			return new ResponseEntity<String>("Record Not Found, Customer list is empty", HttpStatus.NOT_FOUND);
 		}
 
@@ -73,4 +75,5 @@ public class CustomerController {
 		}
 
 	}
+
 }

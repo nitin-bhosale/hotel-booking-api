@@ -26,6 +26,8 @@ public class HotelBookingDetails {
 	private LocalDateTime check_out_time;
 	@Column(name = "booking_status")
 	private String booking_status;
+	@Column(name = "total_bill")
+	private Float total_bill;
 	@Column(name = "customer_id")
 	private Long customer_id;
 	@Column(name = "room_id")
@@ -36,12 +38,13 @@ public class HotelBookingDetails {
 	}
 
 	public HotelBookingDetails(Long booking_id, LocalDateTime check_in_time, LocalDateTime check_out_time,
-			String booking_status, Long customer_id, Long room_id) {
+			String booking_status, Float total_bill, Long customer_id, Long room_id) {
 		super();
 		this.booking_id = booking_id;
 		this.check_in_time = check_in_time;
 		this.check_out_time = check_out_time;
 		this.booking_status = booking_status;
+		this.total_bill = total_bill;
 		this.customer_id = customer_id;
 		this.room_id = room_id;
 	}
@@ -78,6 +81,14 @@ public class HotelBookingDetails {
 		this.booking_status = booking_status;
 	}
 
+	public Float getTotal_bill() {
+		return total_bill;
+	}
+
+	public void setTotal_bill(Float total_bill) {
+		this.total_bill = total_bill;
+	}
+
 	public Long getCustomer_id() {
 		return customer_id;
 	}
@@ -97,8 +108,8 @@ public class HotelBookingDetails {
 	@Override
 	public String toString() {
 		return "HotelBookingDetails [booking_id=" + booking_id + ", check_in_time=" + check_in_time
-				+ ", check_out_time=" + check_out_time + ", booking_status=" + booking_status + ", customer_id="
-				+ customer_id + ", room_id=" + room_id + "]";
+				+ ", check_out_time=" + check_out_time + ", booking_status=" + booking_status + ", total_bill="
+				+ total_bill + ", customer_id=" + customer_id + ", room_id=" + room_id + "]";
 	}
 
 }

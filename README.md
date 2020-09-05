@@ -39,3 +39,12 @@
     "customer_id" : 2,
     "room_id" : 5
   }
+  
+  Note - Enhancement done in above API to add bookings if specific room is not available then book same room if find PENDING_APPROVAL Status.
+  
+  
+  
+  2. API to update Bonus point and do booking for PENDING_APPROVAL
+  
+  http://localhost:8080/updateBonusPoints/{customerid}/{bonuspoints}
+  

@@ -1,13 +1,14 @@
 package com.hotelbooking.api.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hotelbooking.api.exception.CustomerAlreadyExistException;
-import com.hotelbooking.api.exception.CustomerNotFoundException;
+import com.hotelbooking.api.exception.CustomerNotExistException;
 import com.hotelbooking.api.model.Customer;
 import com.hotelbooking.api.repository.CustomerRepository;
 
@@ -22,10 +23,10 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public List<Customer> getAllCustomers() throws CustomerNotFoundException {
+	public List<Customer> getAllCustomers() throws CustomerNotExistException {
 		List<Customer> _customerList = this.customerRepository.findAll();
 		if (_customerList == null) {
-			throw new CustomerNotFoundException("Customer Not Found Exception");
+			throw new CustomerNotExistException("Customer Not Found Exception");
 		}
 		return _customerList;
 
@@ -42,13 +43,16 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer getCustomerByCustomerId(Long customer_id) throws CustomerNotFoundException {
-		Optional<Customer> _customerResult = this.customerRepository.findById(customer_id);
-		if (!_customerResult.isPresent()) {
-			throw new CustomerNotFoundException("Customer Not Found Exception");
+	public Customer getCustomerByCustomerId(Long customer_id) throws CustomerNotExistException {
+		Customer _customerResult = null;
+
+		try {
+			_customerResult = this.customerRepository.findById(customer_id).get();
+		} catch (NoSuchElementException e) {
+			throw new CustomerNotExistException("Customer Not Found Exception");
 		}
 
-		return _customerResult.get();
+		return _customerResult;
 	}
 
 	@Override
